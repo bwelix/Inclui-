@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inclui+ - Aplicativo de Inclusão Digital</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Variáveis de cores */
+        :root {
+            --primary: #E83F8E;
+            --primary-light: #FF7EB3;
+            --primary-dark: #C21B6D;
+            --secondary: #6A1B9A;
+            --accent: #00BFA5;
+            --light: #FFFFFF;
+            --light-gray: #F5F5F5;
+            --gray: #E0E0E0;
+            --dark: #333333;
+            --text: #333333;
+            --text-light: #FFFFFF;
+            --success: #4CAF50;
+            --warning: #FFC107;
+            --error: #F44336;
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Reset e estilos base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--light-gray);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .phone-mockup {
+            width: 100%;
+            max-width: 400px;
+            background: var(--light);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            height: 80vh;
+            max-height: 800px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            border: 12px solid var(--dark);
+            border-radius: 36px;
+        }
+        
+        /* Status bar */
+        .status-bar {
+            background: var(--primary);
+            color: white;
+            padding: 12px 20px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .status-bar .time {
+            font-weight: 600;
+        }
+        
+        .status-bar .icons {
+            display: flex;
+            gap: 5px;
+        }
+        
+        /* Header do app */
+        .app-header {
+            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .app-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+        
+        .app-title h1 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .app-title .plus {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--accent);
+        }
+        
+        .app-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        /* Conteúdo principal */
+        .app-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            background: var(--light-gray);
+        }
+        
+        /* Seção de busca por voz */
+        .voice-section {
+            background: var(--light);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: var(--card-shadow);
+            position: relative;
+        }
+        
+        .voice-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+        
+        .voice-button {
+            background: var(--primary);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            border: none;
+            box-shadow: 0 6px 12px rgba(232, 63, 142, 0.3);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .voice-button:active {
+            transform: scale(0.95);
+            box-shadow: 0 4px 8px rgba(232, 63, 142, 0.2);
+        }
+        
+        .voice-icon {
+            font-size: 32px;
+            color: white;
+        }
+        
+        .voice-instruction {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        /* Categorias */
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin: 24px 0 16px;
+            padding-left: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .category-card {
+            background: var(--light);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.2s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .category-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--primary);
+        }
+        
+        .category-card:active {
+            transform: translateY(2px);
+        }
+        
+        .category-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+        }
+        
+        .category-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        /* Serviços */
+        .services-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .service-card {
+            background: var(--light);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .service-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--light);
+            flex-shrink: 0;
+        }
+        
+        .service-content {
+            flex: 1;
+        }
+        
+        .service-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 4px;
+        }
+        
+        .service-info {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .service-info-icon {
+            margin-right: 8px;
+            min-width: 16px;
+            color: var(--primary);
+        }
+        
+        /* Notícias e informações */
+        .news-section {
+            background: var(--light);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 20px;
+        }
+        
+        .news-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--gray);
+        }
+        
+        .news-item:last-child {
+            border-bottom: none;
+        }
+        
+        .news-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--light);
+            flex-shrink: 0;
+        }
+        
+        .news-content {
+            flex: 1;
+        }
+        
+        .news-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+        
+        .news-desc {
+            font-size: 13px;
+            color: #666;
+        }
+        
+        /* Navegação inferior */
+        .bottom-nav {
+            background: var(--light);
+            border-top: 1px solid var(--gray);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+            position: relative;
+        }
+        
+        .nav-item.active {
+            background: rgba(232, 63, 142, 0.1);
+        }
+        
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 4px;
+            color: var(--dark);
+        }
+        
+        .nav-item.active .nav-icon {
+            color: var(--primary);
+        }
+        
+        .nav-label {
+            font-size: 12px;
+            color: var(--dark);
+        }
+        
+        .nav-item.active .nav-label {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .nav-badge {
+            position: absolute;
+            top: 2px;
+            right: 5px;
+            background: var(--accent);
+            color: white;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        
+        /* Modal de serviço */
+        .service-modal {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--light);
+            border-radius: 20px 20px 0 0;
+            padding: 24px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease-out;
+            z-index: 100;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .service-modal.active {
+            transform: translateY(0);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .close-modal {
+            background: var(--gray);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            color: var(--dark);
+        }
+        
+        .format-options {
+            display: flex;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        
+        .format-button {
+            flex: 1;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        /* Overlay para modal */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 90;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Seções de conteúdo */
+        .content-section {
+            display: none;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        .rights-content, .help-content, .profile-content {
+            padding: 16px;
+        }
+        
+        .rights-card, .help-card, .profile-card {
+            background: var(--light);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .rights-title, .help-title, .profile-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .rights-list, .help-list {
+            list-style-type: none;
+        }
+        
+        .rights-list li, .help-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--gray);
+        }
+        
+        .rights-list li:last-child, .help-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .rights-list i, .help-list i {
+            color: var(--primary);
+            margin-right: 8px;
+        }
+        
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .profile-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+        }
+        
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--light);
+        }
+        
+        /* Animações */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .listening .voice-button {
+            animation: pulse 1s infinite;
+            background: var(--accent);
+        }
+        
+        /* Acessibilidade */
+        .accessibility-tools {
+            position: absolute;
+            bottom: 70px;
+            right: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 10;
+        }
+        
+        .accessibility-btn {
+            background: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            font-size: 18px;
+        }
+        
+        /* High contrast mode */
+        .high-contrast {
+            --light: #000000;
+            --light-gray: #111111;
+            --gray: #333333;
+            --dark: #FFFFFF;
+            --text: #FFFFFF;
+        }
+        
+        .high-contrast .service-card,
+        .high-contrast .category-card,
+        .high-contrast .voice-section,
+        .high-contrast .news-section {
+            background: #000000;
+            color: #FFFFFF;
+            border: 2px solid #FFFFFF;
+        }
+        
+        /* Text size adjustments */
+        .text-large {
+            font-size: 120%;
+        }
+        
+        .text-x-large {
+            font-size: 150%;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-mockup">
+        <div class="status-bar">
+            <div class="time">14:30</div>
+            <div class="icons">📶 🔋 80%</div>
+        </div>
+        
+        <div class="app-header">
+            <div class="app-title">
+                <h1>Inclui</h1>
+                <span class="plus">+</span>
+            </div>
+            <p>Conectando você à informação</p>
+        </div>
+        
+        <div class="app-content">
+            <!-- Seção Início (conteúdo original) -->
+            <div class="content-section active" id="home-section">
+                <div class="voice-section">
+                    <div class="voice-title">Como podemos ajudar?</div>
+                    <button class="voice-button" id="voice-button">
+                        <div class="voice-icon"><i class="fas fa-microphone"></i></div>
+                    </button>
+                    <div class="voice-instruction">Toque no microfone e fale em voz alta</div>
+                    <div class="voice-status" id="voice-status"></div>
+                </div>
+                
+                <div class="section-title">
+                    <i class="fas fa-layer-group" style="color: var(--primary);"></i>
+                    <span>Categorias</span>
+                </div>
+                <div class="categories-grid">
+                    <div class="category-card" data-category="food">
+                        <div class="category-icon"><i class="fas fa-utensils"></i></div>
+                        <div class="category-name">Alimentação</div>
+                    </div>
+                    <div class="category-card" data-category="shelter">
+                        <div class="category-icon"><i class="fas fa-bed"></i></div>
+                        <div class="category-name">Abrigo</div>
+                    </div>
+                    <div class="category-card" data-category="health">
+                        <div class="category-icon"><i class="fas fa-heartbeat"></i></div>
+                        <div class="category-name">Saúde</div>
+                    </div>
+                    <div class="category-card" data-category="hygiene">
+                        <div class="category-icon"><i class="fas fa-shower"></i></div>
+                        <div class="category-name">Higiene</div>
+                    </div>
+                </div>
+                
+                <div class="section-title">
+                    <i class="fas fa-map-marker-alt" style="color: var(--primary);"></i>
+                    <span>Serviços Próximos</span>
+                </div>
+                <div class="services-list">
+                    <div class="service-card" data-service="1">
+                        <div class="service-icon" style="background-color: #E83F8E;">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div class="service-content">
+                            <div class="service-name">Restaurante Popular Central</div>
+                            <div class="service-info">
+                                <span class="service-info-icon"><i class="fas fa-map-marker-alt"></i></span>
+                                <span>Rua das Flores, 123 - Centro</span>
+                            </div>
+                            <div class="service-info">
+                                <span class="service-info-icon"><i class="fas fa-clock"></i></span>
+                                <span>Segunda a Sábado, 11h-14h</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card" data-service="2">
+                        <div class="service-icon" style="background-color: #6A1B9A;">
+                            <i class="fas fa-bed"></i>
+                        </div>
+                        <div class="service-content">
+                            <div class="service-name">Abrigo Esperança</div>
+                            <div class="service-info">
+                                <span class="service-info-icon"><i class="fas fa-map-marker-alt"></i></span>
+                                <span>Rua do Acolhimento, 789 - Centro</span>
+                            </div>
+                            <div class="service-info">
+                                <span class="service-info-icon"><i class="fas fa-clock"></i></span>
+                                <span>24 horas</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section-title">
+                    <i class="fas fa-newspaper" style="color: var(--primary);"></i>
+                    <span>Informações Úteis</span>
+                </div>
+                <div class="news-section">
+                    <div class="news-item">
+                        <div class="news-icon" style="background-color: #00BFA5;">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                        <div class="news-content">
+                            <div class="news-title">Auxílio Brasil</div>
+                            <div class="news-desc">Inscrições abertas para o novo ciclo</div>
+                        </div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-icon" style="background-color: #FFC107;">
+                            <i class="fas fa-bus"></i>
+                        </div>
+                        <div class="news-content">
+                            <div class="news-title">Vale Transporte</div>
+                            <div class="news-desc">Como solicitar o benefício</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Seção Direitos -->
+            <div class="content-section" id="rights-section">
+                <div class="rights-content">
+                    <div class="section-title">
+                        <i class="fas fa-file-alt" style="color: var(--primary);"></i>
+                        <span>Seus Direitos</span>
+                    </div>
+                    
+                    <div class="rights-card">
+                        <div class="rights-title">
+                            <i class="fas fa-utensils"></i>
+                            <span>Direito à Alimentação</span>
+                        </div>
+                        <ul class="rights-list">
+                            <li><i class="fas fa-check-circle"></i> Restaurantes populares com refeições a preço acessível</li>
+                            <li><i class="fas fa-check-circle"></i> Bancos de alimentos para distribuição gratuita</li>
+                            <li><i class="fas fa-check-circle"></i> Programas de complementação nutricional</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="rights-card">
+                        <div class="rights-title">
+                            <i class="fas fa-home"></i>
+                            <span>Direito à Moradia</span>
+                        </div>
+                        <ul class="rights-list">
+                            <li><i class="fas fa-check-circle"></i> Abrigos de emergência para pernoite</li>
+                            <li><i class="fas fa-check-circle"></i> Programas de auxílio-aluguel</li>
+                            <li><i class="fas fa-check-circle"></i> Centros de acolhida com estadia temporária</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="rights-card">
+                        <div class="rights-title">
+                            <i class="fas fa-heartbeat"></i>
+                            <span>Direito à Saúde</span>
+                        </div>
+                        <ul class="rights-list">
+                            <li><i class="fas fa-check-circle"></i> Atendimento gratuito no SUS</li>
+                            <li><i class="fas fa-check-circle"></i> Distribuição de medicamentos básicos</li>
+                            <li><i class="fas fa-check-circle"></i> Vacinação gratuita em postos de saúde</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Seção Ajuda -->
+            <div class="content-section" id="help-section">
+                <div class="help-content">
+                    <div class="section-title">
+                        <i class="fas fa-comments" style="color: var(--primary);"></i>
+                        <span>Central de Ajuda</span>
+                    </div>
+                    
+                    <div class="help-card">
+                        <div class="help-title">
+                            <i class="fas fa-question-circle"></i>
+                            <span>Perguntas Frequentes</span>
+                        </div>
+                        <ul class="help-list">
+                            <li><i class="fas fa-chevron-right"></i> Como acessar os serviços de alimentação?</li>
+                            <li><i class="fas fa-chevron-right"></i> Quais documentos preciso para me cadastrar em programas sociais?</li>
+                            <li><i class="fas fa-chevron-right"></i> Como encontrar abrigos disponíveis próximo a mim?</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="help-card">
+                        <div class="help-title">
+                            <i class="fas fa-phone-alt"></i>
+                            <span>Canais de Atendimento</span>
+                        </div>
+                        <ul class="help-list">
+                            <li><i class="fas fa-phone"></i> Central de Atendimento Social: 156</li>
+                            <li><i class="fas fa-phone"></i> Disque Direitos Humanos: 100</li>
+                            <li><i class="fas fa-phone"></i> Centro de Valorização da Vida: 188</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="help-card">
+                        <div class="help-title">
+                            <i class="fas fa-hands-helping"></i>
+                            <span>Como podemos te ajudar?</span>
+                        </div>
+                        <p>Entre em contato conosco para:</p>
+                        <ul class="help-list">
+                            <li><i class="fas fa-check"></i> Tirar dúvidas sobre seus direitos</li>
+                            <li><i class="fas fa-check"></i> Solicitar informações sobre serviços</li>
+                            <li><i class="fas fa-check"></i> Reportar problemas no aplicativo</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Seção Perfil -->
+            <div class="content-section" id="profile-section">
+                <div class="profile-content">
+                    <div class="section-title">
+                        <i class="fas fa-user" style="color: var(--primary);"></i>
+                        <span>Meu Perfil</span>
+                    </div>
+                    
+                    <div class="profile-card">
+                        <div class="profile-item">
+                            <div class="profile-icon">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div>
+                                <h3>Visitante</h3>
+                                <p>Faça login para personalizar sua experiência</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-card">
+                        <div class="rights-title">
+                            <i class="fas fa-cog"></i>
+                            <span>Configurações</span>
+                        </div>
+                        <div class="profile-info">
+                            <div class="profile-item">
+                                <div class="profile-icon">
+                                    <i class="fas fa-bell"></i>
+                                </div>
+                                <div>
+                                    <h4>Notificações</h4>
+                                    <p>Gerencie suas notificações</p>
+                                </div>
+                            </div>
+                            <div class="profile-item">
+                                <div class="profile-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <h4>Localização</h4>
+                                    <p>Compartilhar minha localização</p>
+                                </div>
+                            </div>
+                            <div class="profile-item">
+                                <div class="profile-icon">
+                                    <i class="fas fa-language"></i>
+                                </div>
+                                <div>
+                                    <h4>Idioma</h4>
+                                    <p>Português (Brasil)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-card">
+                        <div class="rights-title">
+                            <i class="fas fa-info-circle"></i>
+                            <span>Sobre o Aplicativo</span>
+                        </div>
+                        <p>O Inclui+ tem como objetivo conectar pessoas em situação de vulnerabilidade a serviços essenciais e informações sobre seus direitos.</p>
+                        <p style="margin-top: 10px;">Versão 1.0.0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accessibility-tools">
+            <button class="accessibility-btn" id="text-size-btn" title="Aumentar texto">
+                <i class="fas fa-text-height"></i>
+            </button>
+            <button class="accessibility-btn" id="contrast-btn" title="Alto contraste">
+                <i class="fas fa-adjust"></i>
+            </button>
+            <button class="accessibility-btn" id="read-aloud-btn" title="Ouvir página">
+                <i class="fas fa-volume-up"></i>
+            </button>
+        </div>
+        
+        <div class="bottom-nav">
+            <div class="nav-item active" data-target="home-section">
+                <div class="nav-icon"><i class="fas fa-home"></i></div>
+                <div class="nav-label">Início</div>
+            </div>
+            <div class="nav-item" data-target="rights-section">
+                <div class="nav-icon"><i class="fas fa-file-alt"></i></div>
+                <div class="nav-label">Direitos</div>
+            </div>
+            <div class="nav-item" data-target="help-section">
+                <div class="nav-icon"><i class="fas fa-comments"></i></div>
+                <div class="nav-label">Ajuda</div>
+                <div class="nav-badge">3</div>
+            </div>
+            <div class="nav-item" data-target="profile-section">
+                <div class="nav-icon"><i class="fas fa-user"></i></div>
+                <div class="nav-label">Perfil</div>
+            </div>
+        </div>
+        
+        <div class="overlay" id="overlay"></div>
+        
+        <div class="service-modal" id="service-modal">
+            <div class="modal-header">
+                <div class="modal-title" id="modal-title">Restaurante Popular Central</div>
+                <button class="close-modal" id="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            
+            <div class="service-info">
+                <span class="service-info-icon"><i class="fas fa-map-marker-alt"></i></span>
+                <span>Rua das Flores, 123 - Centro</span>
+            </div>
+            <div class="service-info">
+                <span class="service-info-icon"><i class="fas fa-clock"></i></span>
+                <span>Segunda a Sábado, 11h-14h</span>
+            </div>
+            <div class="service-info">
+                <span class="service-info-icon"><i class="fas fa-tag"></i></span>
+                <span>Almoço completo por R$ 1,00</span>
+            </div>
+            
+            <div class="format-options">
+                <button class="format-button">
+                    <i class="fas fa-volume-up"></i> Ouvir
+                </button>
+                <button class="format-button">
+                    <i class="fas fa-font"></i> Texto Simples
+                </button>
+                <button class="format-button">
+                    <i class="fas fa-route"></i> Como Chegar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Elementos DOM
+        const voiceButton = document.getElementById('voice-button');
+        const voiceStatus = document.getElementById('voice-status');
+        const serviceCards = document.querySelectorAll('.service-card');
+        const categoryCards = document.querySelectorAll('.category-card');
+        const overlay = document.getElementById('overlay');
+        const serviceModal = document.getElementById('service-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const closeModal = document.getElementById('close-modal');
+        const navItems = document.querySelectorAll('.nav-item');
+        const textSizeBtn = document.getElementById('text-size-btn');
+        const contrastBtn = document.getElementById('contrast-btn');
+        const readAloudBtn = document.getElementById('read-aloud-btn');
+        const contentSections = document.querySelectorAll('.content-section');
+        
+        // Dados de serviços
+        const services = {
+            1: {
+                name: "Restaurante Popular Central",
+                address: "Rua das Flores, 123 - Centro",
+                hours: "Segunda a Sábado, 11h-14h",
+                description: "Almoço completo por R$ 1,00"
+            },
+            2: {
+                name: "Abrigo Esperança",
+                address: "Rua do Acolhimento, 789 - Centro",
+                hours: "24 horas",
+                description: "Abrigo com vagas para pernoite. Banho e alimentação inclusos."
+            }
+        };
+        
+        // Simular reconhecimento de voz
+        voiceButton.addEventListener('click', () => {
+            voiceButton.classList.add('listening');
+            voiceStatus.textContent = "Ouvindo... Fale agora";
+            
+            // Simular processamento após 3 segundos
+            setTimeout(() => {
+                voiceButton.classList.remove('listening');
+                voiceStatus.textContent = "Mostrando serviços de alimentação...";
+                
+                // Simular mostrar resultados
+                setTimeout(() => {
+                    document.querySelector('.section-title').scrollIntoView({ behavior: 'smooth' });
+                }, 1000);
+            }, 3000);
+        });
+        
+        // Abrir modal ao clicar em um serviço
+        serviceCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const serviceId = card.getAttribute('data-service');
+                const service = services[serviceId];
+                
+                modalTitle.textContent = service.name;
+                overlay.classList.add('active');
+                serviceModal.classList.add('active');
+            });
+        });
+        
+        // Fechar modal
+        closeModal.addEventListener('click', () => {
+            overlay.classList.remove('active');
+            serviceModal.classList.remove('active');
+        });
+        
+        overlay.addEventListener('click', () => {
+            overlay.classList.remove('active');
+            serviceModal.classList.remove('active');
+        });
+        
+        // Navegação inferior - mudar de seção
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const targetSectionId = item.getAttribute('data-target');
+                
+                // Atualizar navegação
+                navItems.forEach(nav => nav.classList.remove('active'));
+                item.classList.add('active');
+                
+                // Mostrar seção correspondente
+                contentSections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                document.getElementById(targetSectionId).classList.add('active');
+                
+                // Scroll para o topo do conteúdo
+                document.querySelector('.app-content').scrollTo(0, 0);
+            });
+        });
+        
+        // Categorias
+        categoryCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const category = card.getAttribute('data-category');
+                let categoryName = "";
+                
+                switch(category) {
+                    case "food":
+                        categoryName = "alimentação";
+                        break;
+                    case "shelter":
+                        categoryName = "abrigo";
+                        break;
+                    case "health":
+                        categoryName = "saúde";
+                        break;
+                    case "hygiene":
+                        categoryName = "higiene";
+                        break;
+                }
+                
+                voiceStatus.textContent = `Mostrando serviços de ${categoryName}...`;
+                
+                // Scroll para a seção de serviços
+                document.querySelector('.section-title').scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
